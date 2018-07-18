@@ -1,10 +1,10 @@
 // package metadata file for Meteor.js
 
 Package.describe({
-  name: 'materialize:materialize',  // http://atmospherejs.com/materialize/materialize
-  summary: 'Materialize (official): A modern responsive front-end framework based on Material Design',
+  name: 'nubix-biz:materialize',  // http://atmospherejs.com/nubix-biz/materialize
+  summary: 'Materialize (nubix): A modern responsive front-end framework based on Material Design',
   version: '1.0.0-rc.2',
-  git: 'https://github.com/Dogfalo/materialize.git'
+  git: 'https://github.com/nubix-biz/materialize.git'
 });
 
 

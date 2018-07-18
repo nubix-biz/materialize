@@ -1,6 +1,6 @@
 {
-  "name": "materialize-css",
-  "description": "Builds Materialize distribution packages",
+  "name": "@nubix/materialize-css",
+  "description": "Builds Materialize distribution packages (nubix Fork)",
   "author": "Alvin Wang, Alan Chang",
   "homepage": "http://materializecss.com/",
   "version": "1.0.0-rc.2",
@@ -8,9 +8,12 @@
   "style": "dist/css/materialize.css",
   "sass": "sass/materialize.scss",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://team.nubix.biz/npm/"
+  },
   "repository": {
     "type": "git",
-    "url": "git://github.com/Dogfalo/materialize.git"
+    "url": "git://github.com/nubix-biz/materialize.git"
   },
   "bugs": {
     "url": "https://github.com/Dogfalo/materialize/issues"
