@@ -3,7 +3,7 @@
 Package.describe({
   name: 'nubix-biz:materialize',  // http://atmospherejs.com/nubix-biz/materialize
   summary: 'Materialize (nubix): A modern responsive front-end framework based on Material Design',
-  version: '1.0.0-rc.2',
+  version: '1.0.0-rc.3',
   git: 'https://github.com/nubix-biz/materialize.git'
 });
 

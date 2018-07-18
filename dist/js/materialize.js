@@ -1,5 +1,5 @@
 /*!
- * Materialize v1.0.0-rc.2 (http://materializecss.com)
+ * Materialize v1.0.0-rc.3 (http://materializecss.com)
  * Copyright 2014-2017 Materialize
  * MIT License (https://raw.githubusercontent.com/Dogfalo/materialize/master/LICENSE)
  */
@@ -2253,7 +2253,7 @@ $jscomp.polyfill = function (e, r, p, m) {
        * @prop {String} [alignment='left'] - Edge which the dropdown is aligned to
        * @prop {Boolean} [autoFocus=true] - Automatically focus dropdown el for keyboard
        * @prop {Boolean} [constrainWidth=true] - Constrain width to width of the button
-       * @prop {Element} container - Container element to attach dropdown to (optional)
+       * @prop {(Element|string)} container - Container element or element selector to attach dropdown to (optional)
        * @prop {Boolean} [coverTrigger=true] - Place dropdown over trigger
        * @prop {Boolean} [closeOnClick=true] - Close on click of dropdown item
        * @prop {Boolean} [hover=false] - Open dropdown on hover
@@ -2507,7 +2507,11 @@ $jscomp.polyfill = function (e, r, p, m) {
           var $activatableElement = $(focusedElement).find('a, button').first();
 
           // Click a or button tag if exists, otherwise click li tag
-          !!$activatableElement.length ? $activatableElement[0].click() : focusedElement.click();
+          if (!!$activatableElement.length) {
+            $activatableElement[0].click();
+          } else if (!!focusedElement) {
+            focusedElement.click();
+          }
 
           // Close dropdown on ESC
         } else if (e.which === M.keys.ESC && this.isOpen) {
@@ -2687,8 +2691,7 @@ $jscomp.polyfill = function (e, r, p, m) {
 
             // onOpenEnd callback
             if (typeof _this11.options.onOpenEnd === 'function') {
-              var elem = anim.animatables[0].target;
-              _this11.options.onOpenEnd.call(elem, _this11.el);
+              _this11.options.onOpenEnd.call(_this11, _this11.el);
             }
           }
         });
@@ -2719,7 +2722,6 @@ $jscomp.polyfill = function (e, r, p, m) {
 
             // onCloseEnd callback
             if (typeof _this12.options.onCloseEnd === 'function') {
-              var elem = anim.animatables[0].target;
               _this12.options.onCloseEnd.call(_this12, _this12.el);
             }
           }
@@ -9305,13 +9307,15 @@ $jscomp.polyfill = function (e, r, p, m) {
         // Init Materialize Select
         var yearSelect = this.calendarEl.querySelector('.orig-select-year');
         var monthSelect = this.calendarEl.querySelector('.orig-select-month');
+        var container = !!this.options.container ? this.options.container : document.body;
+
         M.FormSelect.init(yearSelect, {
           classes: 'select-year',
-          dropdownOptions: { container: document.body, constrainWidth: false }
+          dropdownOptions: { container: container, constrainWidth: false }
         });
         M.FormSelect.init(monthSelect, {
           classes: 'select-month',
-          dropdownOptions: { container: document.body, constrainWidth: false }
+          dropdownOptions: { container: container, constrainWidth: false }
         });
 
         // Add change handlers for select
@@ -11833,10 +11837,20 @@ $jscomp.polyfill = function (e, r, p, m) {
           // Add callback for centering selected option when dropdown content is scrollable
           dropdownOptions.onOpenEnd = function (el) {
             var selectedOption = $(_this71.dropdownOptions).find('.selected').first();
-            if (_this71.dropdown.isScrollable && selectedOption.length) {
-              var scrollOffset = selectedOption[0].getBoundingClientRect().top - _this71.dropdownOptions.getBoundingClientRect().top; // scroll to selected option
-              scrollOffset -= _this71.dropdownOptions.clientHeight / 2; // center in dropdown
-              _this71.dropdownOptions.scrollTop = scrollOffset;
+
+            if (selectedOption.length) {
+              // Focus selected option in dropdown
+              M.keyDown = true;
+              _this71.dropdown.focusedIndex = selectedOption.index();
+              _this71.dropdown._focusFocusedItem();
+              M.keyDown = false;
+
+              // Handle scrolling to selected option
+              if (_this71.dropdown.isScrollable) {
+                var scrollOffset = selectedOption[0].getBoundingClientRect().top - _this71.dropdownOptions.getBoundingClientRect().top; // scroll to selected option
+                scrollOffset -= _this71.dropdownOptions.clientHeight / 2; // center in dropdown
+                _this71.dropdownOptions.scrollTop = scrollOffset;
+              }
             }
           };
 
