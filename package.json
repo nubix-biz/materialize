@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/nubix-biz/materialize.git"
+    "url": "git://github.com/nubix-de/materialize.git"
   },
   "bugs": {
     "url": "https://github.com/Dogfalo/materialize/issues"
